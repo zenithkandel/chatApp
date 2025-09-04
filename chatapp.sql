@@ -38,6 +38,7 @@ CREATE TABLE `messages` (
 
 --
 -- Table structure for table `users`
+
 --
 
 CREATE TABLE `users` (
