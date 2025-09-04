@@ -11,19 +11,19 @@
         $query = mysqli_query($conn, $sql);
         if(mysqli_num_rows($query) > 0){
             while($row = mysqli_fetch_assoc($query)){
+                $hasImage = isset($row['image']) && $row['image'] !== null && $row['image'] !== '';
+                $msgHtml = '';
+                if($row['msg'] !== ''){
+                    $msgHtml .= '<p>'. $row['msg'] .'</p>';
+                }
+                if($hasImage){
+                    $msgHtml .= '<div class="msg-image"><img src="php/images/messages/'. htmlspecialchars($row['image']) .'" alt="attachment"></div>';
+                }
+
                 if($row['outgoing_msg_id'] === $outgoing_id){
-                    $output .= '<div class="chat outgoing">
-                                <div class="details">
-                                    <p>'. $row['msg'] .'</p>
-                                </div>
-                                </div>';
+                    $output .= '<div class="chat outgoing"><div class="details">'. $msgHtml .'</div></div>';
                 }else{
-                    $output .= '<div class="chat incoming">
-                                <img src="php/images/'.$row['img'].'" alt="">
-                                <div class="details">
-                                    <p>'. $row['msg'] .'</p>
-                                </div>
-                                </div>';
+                    $output .= '<div class="chat incoming"><img src="php/images/'.$row['img'].'" alt=""><div class="details">'. $msgHtml .'</div></div>';
                 }
             }
         }else{

@@ -22,6 +22,34 @@ body{
   box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
               0 32px 64px -48px rgba(0,0,0,0.5);
 }
+/* Full-screen chat page overrides */
+body.chat-page{
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+}
+body.chat-page .wrapper{
+  max-width: none;
+  width: 100%;
+  min-height: 100vh;
+  border-radius: 0;
+}
+body.chat-page .chat-area{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body.chat-page .chat-area header{
+  flex: 0 0 auto;
+}
+body.chat-page .chat-box{
+  flex: 1 1 auto;
+  min-height: auto;
+  max-height: none;
+}
+body.chat-page .typing-area{
+  flex: 0 0 auto;
+}
 
 /* Login & Signup Form CSS Start */
 .form{
@@ -282,6 +310,17 @@ body{
   padding: 8px 16px;
   box-shadow: 0 0 32px rgb(0 0 0 / 8%),
               0rem 16px 16px -16px rgb(0 0 0 / 10%);
+}
+/* Image attachments inside message */
+.chat-box .chat .msg-image{
+  margin-top: 6px;
+}
+.chat-box .chat .msg-image img{
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 16px rgb(0 0 0 / 10%);
 }
 .chat-box .outgoing{
   display: flex;

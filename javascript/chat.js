@@ -1,7 +1,8 @@
 const form = document.querySelector(".typing-area"),
 incoming_id = form.querySelector(".incoming_id").value,
 inputField = form.querySelector(".input-field"),
-sendBtn = form.querySelector("button"),
+fileInput = form.querySelector('input[name="attachment"]'),
+sendBtn = form.querySelector("button[type='submit']"),
 chatBox = document.querySelector(".chat-box");
 
 form.onsubmit = (e)=>{
@@ -9,13 +10,15 @@ form.onsubmit = (e)=>{
 }
 
 inputField.focus();
-inputField.onkeyup = ()=>{
-    if(inputField.value != ""){
+function updateSendBtn(){
+    if((inputField.value && inputField.value.trim() !== "") || (fileInput && fileInput.files.length > 0)){
         sendBtn.classList.add("active");
     }else{
         sendBtn.classList.remove("active");
     }
 }
+inputField.onkeyup = updateSendBtn;
+fileInput && (fileInput.onchange = updateSendBtn);
 
 sendBtn.onclick = ()=>{
     let xhr = new XMLHttpRequest();
@@ -24,7 +27,9 @@ sendBtn.onclick = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){
               inputField.value = "";
+              if(fileInput){ fileInput.value = ""; }
               scrollToBottom();
+              updateSendBtn();
           }
       }
     }

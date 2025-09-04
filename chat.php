@@ -6,7 +6,7 @@
   }
 ?>
 <?php include_once "header.php"; ?>
-<body>
+<body class="chat-page">
   <div class="wrapper">
     <section class="chat-area">
       <header>
@@ -29,15 +29,27 @@
       <div class="chat-box">
 
       </div>
-      <form action="#" class="typing-area">
+      <form action="#" class="typing-area" enctype="multipart/form-data">
         <input type="text" class="incoming_id" name="incoming_id" value="<?php echo $user_id; ?>" hidden>
         <input type="text" name="message" class="input-field" placeholder="Type a message here..." autocomplete="off">
-        <button><i class="fab fa-telegram-plane"></i></button>
+        <input type="file" name="attachment" accept="image/*" style="display:none" />
+        <button type="button" class="attach-btn" title="Attach image" style="margin-left:8px;background:#888;width:auto;padding:0 10px"><i class="fas fa-paperclip"></i></button>
+        <button type="submit"><i class="fab fa-telegram-plane"></i></button>
       </form>
     </section>
   </div>
 
   <script src="javascript/chat.js"></script>
+  <script>
+    // Small inline handler to open the hidden file input
+    const chatForm = document.querySelector('.typing-area');
+    const attachBtn = chatForm.querySelector('.attach-btn');
+    const fileInput = chatForm.querySelector('input[name="attachment"]');
+    attachBtn?.addEventListener('click', function(e){
+      e.preventDefault();
+      fileInput?.click();
+    });
+  </script>
 
 </body>
 </html>
