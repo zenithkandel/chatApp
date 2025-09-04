@@ -45,22 +45,34 @@ chatBox.onmouseleave = ()=>{
 }
 
 setInterval(() =>{
+        fetchChat();
+}, 500);
+
+// Fetch chat helper; if initial === true, force scroll to bottom after first render
+let firstLoad = true;
+function fetchChat(){
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "php/get-chat.php", true);
     xhr.onload = ()=>{
-      if(xhr.readyState === XMLHttpRequest.DONE){
-          if(xhr.status === 200){
-            let data = xhr.response;
-            chatBox.innerHTML = data;
-            if(!chatBox.classList.contains("active")){
-                scrollToBottom();
-              }
-          }
-      }
+        if(xhr.readyState === XMLHttpRequest.DONE){
+            if(xhr.status === 200){
+                let data = xhr.response;
+                chatBox.innerHTML = data;
+                if(firstLoad){
+                    scrollToBottom();
+                    firstLoad = false;
+                }else if(!chatBox.classList.contains("active")){
+                    scrollToBottom();
+                }
+            }
+        }
     }
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("incoming_id="+incoming_id);
-}, 500);
+}
+
+// Trigger an immediate initial fetch so the view scrolls without waiting
+fetchChat();
 
 function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;

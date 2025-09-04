@@ -27,28 +27,40 @@ body.chat-page{
   align-items: stretch;
   justify-content: stretch;
   padding: 0;
+  overflow: hidden; /* prevent page scroll; only chat-box scrolls */
 }
 body.chat-page .wrapper{
   max-width: none;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   border-radius: 0;
 }
 body.chat-page .chat-area{
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh; /* fixed viewport height container */
 }
 body.chat-page .chat-area header{
   flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #fff; /* cover content under when sticky */
 }
 body.chat-page .chat-box{
   flex: 1 1 auto;
   min-height: auto;
   max-height: none;
+  z-index: 1;
+  overflow-y: auto; /* ensure this is the only scroll area */
 }
 body.chat-page .typing-area{
   flex: 0 0 auto;
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: #fff; /* cover content under when sticky */
+  border-top: 1px solid #e6e6e6;
 }
 
 /* Login & Signup Form CSS Start */
@@ -355,31 +367,44 @@ body.chat-page .typing-area{
 .typing-area{
   padding: 18px 30px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
 }
 .typing-area input{
   height: 45px;
-  width: calc(100% - 58px);
+  flex: 1 1 auto;
   font-size: 16px;
   padding: 0 13px;
   border: 1px solid #e6e6e6;
   outline: none;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px;
 }
 .typing-area button{
   color: #fff;
-  width: 55px;
   border: none;
   outline: none;
   background: #333;
   font-size: 19px;
   cursor: pointer;
-  opacity: 0.7;
-  pointer-events: none;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px;
   transition: all 0.3s ease;
 }
-.typing-area button.active{
+/* Only disable the submit button by default */
+.typing-area button[type="submit"]{
+  width: 55px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.typing-area button[type="submit"].active{
+  opacity: 1;
+  pointer-events: auto;
+}
+/* Attach button is always clickable */
+.typing-area .attach-btn{
+  background: #888;
   opacity: 1;
   pointer-events: auto;
 }

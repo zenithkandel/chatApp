@@ -41,14 +41,19 @@
 
   <script src="javascript/chat.js"></script>
   <script>
-    // Small inline handler to open the hidden file input
-    const chatForm = document.querySelector('.typing-area');
-    const attachBtn = chatForm.querySelector('.attach-btn');
-    const fileInput = chatForm.querySelector('input[name="attachment"]');
-    attachBtn?.addEventListener('click', function(e){
-      e.preventDefault();
-      fileInput?.click();
-    });
+    // Small inline handler to open the hidden file input (no optional chaining)
+    (function(){
+      var chatForm = document.querySelector('.typing-area');
+      if(!chatForm) return;
+      var attachBtn = chatForm.querySelector('.attach-btn');
+      var fileInput = chatForm.querySelector('input[name="attachment"]');
+      if(attachBtn && fileInput){
+        attachBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          fileInput.click();
+        });
+      }
+    })();
   </script>
 
 </body>
